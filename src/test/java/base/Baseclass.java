@@ -8,6 +8,8 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.options.XCUITestOptions;
 import io.appium.java_client.remote.AutomationName;
+import io.appium.java_client.service.local.AppiumDriverLocalService;
+import io.appium.java_client.service.local.AppiumServiceBuilder;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
@@ -29,6 +31,8 @@ public class Baseclass {
    static  public IOSDriver driver=null;
    static public ExtentReports extentReports;
   static   public ExtentTest extendtest;
+
+    AppiumDriverLocalService localService=null;
 
 
 
@@ -53,6 +57,13 @@ public class Baseclass {
     @BeforeSuite
     public void setUp() throws IOException {
 
+
+       localService= new AppiumServiceBuilder().withTimeout(Duration.ofSeconds(10)).build();
+
+       // localService=AppiumDriverLocalService.buildDefaultService();
+
+       localService.start();
+
        extentReports=new ExtentReports();
 
 
@@ -67,16 +78,24 @@ public class Baseclass {
         ObjectMapper objectMapper=new ObjectMapper();
         objectMapper.writeValue(new File("./src/test/resources/aboutphone.json"),phoneModel);
 
+
+        if(localService.isRunning())
+        {
             if(driver==null)
             {
-              getDriver();
-             }
+                getDriver();
+            }
+        }
+
+
+
     }
 
     @AfterSuite
     public void teadown()
     {
         extentReports.flush();
+        localService.stop();
      //   driver.close();
     }
 
