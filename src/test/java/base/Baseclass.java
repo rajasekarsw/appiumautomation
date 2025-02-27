@@ -42,6 +42,7 @@ public class Baseclass {
         xcuiTestOptions.setBundleId("com.apple.Preferences");
         xcuiTestOptions.setNoReset(false);
         xcuiTestOptions.setUdid("7B22F631-9FFB-4104-BBF8-5C65D139022E");
+        xcuiTestOptions.setAutoAcceptAlerts(true);
 
 
         driver =new IOSDriver(new URL("http://127.0.0.1:4723/"),xcuiTestOptions);
@@ -55,7 +56,11 @@ public class Baseclass {
     public void setUp() throws IOException {
 
 
-       localService= new AppiumServiceBuilder().withTimeout(Duration.ofSeconds(10)).build();
+       localService= new AppiumServiceBuilder()
+               .withTimeout(Duration.ofSeconds(10))
+               .withAppiumJS(new File("/usr/local/bin/appium/"))
+              // .withAppiumJS(new File("/usr/local/lib/node_modules/appium/lib/main.js"))
+               .build();
 
        // localService=AppiumDriverLocalService.buildDefaultService();
 
