@@ -53,6 +53,5 @@ public class Aboutphone {
     @Test
     public void secondTestcase()
     {
-
     }
 }
