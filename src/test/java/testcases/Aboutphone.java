@@ -49,4 +49,10 @@ public class Aboutphone {
         Assert.assertEquals(aboutphonepage.verifyModelNumber(),aboutphonemodel.modelNumber());
 
     }
+
+    @Test
+    public void secondTestcase()
+    {
+
+    }
 }
